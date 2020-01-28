@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
-import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -15,7 +14,6 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
   declarations: [
     AppComponent,
     AuthComponent,
-    HeaderComponent,
     GameComponent,
     RegisterComponent,
     LoginComponent

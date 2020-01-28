@@ -1,0 +1,9 @@
+.row {
+  margin-top: 10%;
+  border-radius: 6%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: solid gray;
+
+  border-width: 1 1px;
+
+}

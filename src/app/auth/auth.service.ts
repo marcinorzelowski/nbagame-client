@@ -9,20 +9,21 @@ import {Injectable} from '@angular/core';
 export interface AuthRegisterData {
   success: string;
   message: string;
-  name: string;
-  username: string;
-  email: string;
-  password: string;
+}
+
+export interface AuthLoginData {
+  accessToken: string;
+  tokenType: string;
+
 }
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-  private user = new BehaviorSubject<User>(null);
+  user = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient, private router: Router) {}
 
   signup(name: string, username: string, email: string, password: string) {
-    console.log(name + email + password);
     return this.http.post<AuthRegisterData>(
       'http://localhost:8080/api/auth/signup',
       {
@@ -34,25 +35,37 @@ export class AuthService {
     )
   .pipe(
       catchError(this.handleError),
-      tap( resData => {
+    tap(resData => {
+      console.log(
+        resData.success + " " + resData.message
+      );
+    })
+    );
+  }
+
+  signin(username: string, password: string) {
+    return this.http.post<AuthLoginData>(
+      'http://localhost:8080/api/auth/signin',
+      {
+        username: username,
+        password: password
+      }
+    ).pipe(
+      catchError(this.handleError),
+      tap(resData => {
         this.handleAuthentication(
-          resData.name,
-          resData.username,
-          resData.email,
-          resData.password
-        );
+          username,
+          resData.accessToken);
       })
     );
   }
 
+
   private handleAuthentication(
-    name: string,
     username: string,
-    email: string,
     token: string,
   ) {
-
-    const user = new User(name, username, email, token);
+    const user = new User(username, token);
     this.user.next(user);
 
   }
